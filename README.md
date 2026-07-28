@@ -817,3 +817,71 @@ The class diagram below shows the main components and data structure of the Camp
 The sequence diagram below shows how a student searches for a stall and opens the stall detail modal.
 
 ![Sequence Diagram](sequence-diagram.png)
+
+## Practical 9: Iteration 3 - Bug Tracking and System Testing
+
+### Objective
+
+The objective of Practical 9 is to perform final system testing, track software defects using GitHub Issues and GitHub Projects, and verify that the CampusBite website is ready for the Week 10 demonstration. During this practical, the focus shifts from implementing new features to validating completed functionality, resolving defects, and improving the overall quality and stability of the system.
+
+### Bug Tracking
+
+Following the completion of Iteration 3, the team conducted system testing on the completed features of the CampusBite website. Any bugs identified during testing were recorded as GitHub Issues and linked to their corresponding user stories.
+
+GitHub User Stories, GitHub Issues and the GitHub Project Board were used throughout the testing process to record, organise and monitor software defects. Each bug report includes a bug title, description, reproduction steps, expected result, actual result, severity and current status.
+
+The reported bugs mainly involve:
+
+- Search Function
+- Category Filter
+- Stall Details
+- Ratings and Reviews
+- Responsive Layout
+- Documentation Updates
+
+### System Testing Plan
+
+The system testing plan focuses on verifying that the major functions completed during Iteration 3 operate correctly before the final project demonstration. The detailed manual and automated test cases created in Practical 7 provide the basis for this final system testing.
+
+| Feature | Related User Story | Testing Objective | Expected Result | Status |
+|---------|-------------------|-------------------|-----------------|--------|
+| Search Function | US6 | Verify that searching by valid, invalid and empty keywords produces the correct results. | Search results are displayed accurately and appropriate messages are shown when required. | Planned |
+| Category Filter | US7 | Verify that food stalls can be filtered correctly by category and that filters can be cleared successfully. | Only matching food stalls are displayed and the filter resets correctly. | Planned |
+| Stall Details | US8 | Verify that the stall detail page displays complete and accurate information. | Stall name, menu items, prices, opening hours and location are displayed correctly. | Planned |
+| Ratings and Reviews | US9 | Verify that ratings and customer reviews are displayed correctly, including stalls without reviews. | Ratings and reviews are shown correctly and appropriate messages appear when no reviews exist. | Planned |
+| Final System Testing | US10 | Verify the overall stability of the website across supported browsers and screen sizes after all bug fixes have been completed. | All major features operate correctly without critical defects and the website is ready for deployment. | Planned |
+
+### Testing Environment
+
+The final system testing will be carried out using both the local development version and the deployed CampusBite website.
+
+Testing Environment:
+
+- Frontend: React and Vite
+- Browsers: Google Chrome and Microsoft Edge
+- Devices: Desktop and Mobile
+- Deployment Platform: Vercel
+- Bug Tracking Tools: GitHub Issues and GitHub Projects
+
+### Bug Tracking Workflow
+
+The team manages software defects using the following workflow:
+
+**To Do → In Progress → In Review → Done**
+
+Whenever a defect is discovered during testing, a GitHub Issue is created under the relevant user story. After the issue has been fixed, the related feature is tested again before the issue is moved to **Done** on the GitHub Project Board.
+
+### System Testing Completion Criteria
+
+System testing will be considered complete when:
+
+- All planned system testing activities have been completed.
+- High-priority bugs have been resolved.
+- Fixed defects have been successfully retested.
+- All major website functions operate correctly.
+- No critical defects remain.
+- The deployed CampusBite website is ready for the Week 10 demonstration.
+
+### Reflection
+
+Practical 9 strengthened the team's understanding of software testing and defect management. Using GitHub Issues together with the GitHub Project Board made it easier to organise software defects, monitor their progress and link each bug to the relevant user story. Conducting final system testing also improved confidence that the CampusBite website is stable, reliable and ready for project delivery.
