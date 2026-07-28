@@ -1,3 +1,4 @@
+import MockLogin from "./components/MockLogin";
 import { useEffect, useState } from "react";
 import "./App.css";
 
@@ -329,6 +330,7 @@ function App() {
           <a href="#details">Details</a>
           <a href="#reviews">Reviews</a>
         </div>
+        <MockLogin />
       </nav>
 
       <header className="hero">
