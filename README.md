@@ -885,3 +885,93 @@ System testing will be considered complete when:
 ### Reflection
 
 Practical 9 strengthened the team's understanding of software testing and defect management. Using GitHub Issues together with the GitHub Project Board made it easier to organise software defects, monitor their progress and link each bug to the relevant user story. Conducting final system testing also improved confidence that the CampusBite website is stable, reliable and ready for project delivery.
+
+## Practical 10: Iteration 3 - Final Review and Demonstration
+
+### Objective
+
+The objective of Practical 10 is to complete Iteration 3, review the final CampusBite system, and prepare the project for the final demonstration.
+
+### Final Project Status
+
+By Practical 10, the main planned features of CampusBite have been implemented and tested.
+
+The final system includes:
+
+- Browse Food Stalls
+- View Stall Details
+- Search Food Stalls
+- Category Filter
+- Ratings and Reviews
+- Menu, Price and Opening Hours Information
+- Responsive User Interface
+
+Iteration 3 mainly focused on testing, bug fixing, UI refinement and final documentation rather than adding major new features.
+
+### Final Demonstration
+
+During the Week 10 practical, the team will demonstrate the main CampusBite user flow:
+
+1. Open the deployed CampusBite website.
+2. Browse available food stalls.
+3. Search for a food stall.
+4. Filter stalls by category.
+5. Open and view stall details.
+6. Check menu, prices, opening hours and location.
+7. View ratings and reviews.
+8. Check the responsive layout.
+
+The GitHub Project Board, user stories, testing tasks and bug tracking will also be shown as evidence of the development process.
+
+### Final System Check
+
+Before the demonstration, the team will complete a final check of the major functions.
+
+| Area | Final Check |
+|---|---|
+| Browse Food Stalls | Stall cards display correctly |
+| Search | Search results match the keyword |
+| Category Filter | Correct stalls are displayed |
+| Stall Details | Stall information displays correctly |
+| Ratings & Reviews | Rating and review information works correctly |
+| Responsive Layout | Website works on different screen sizes |
+| Bug Fixes | Previously identified bugs are retested |
+
+The system testing plan from Practical 9 will be used to support this final check.
+
+### Assessment Rubric Review
+
+The project will also be reviewed against the CP3407 marking rubric.
+
+| Assessment Area | Evidence |
+|---|---|
+| Requirements | User stories, priorities and estimates |
+| Design | UML diagrams and interface design |
+| Implementation | Working CampusBite website |
+| Testing | Test cases, TDD, system testing and bug tracking |
+| Version Control | GitHub commits, branches, issues and pull requests |
+| Development Tools | React, Vite, GitHub and Vercel |
+| Agile Development | Three iterations, Project Board and burn down graphs |
+| Technical Writing | README and project documentation |
+
+This review helps confirm that the required project evidence is included before the final assessment.
+
+### Iteration 3 Completion
+
+Iteration 3 completes the main development cycle of CampusBite. The final iteration focused on:
+
+- Test-Driven Development
+- System testing
+- Bug tracking and fixing
+- UI refinement
+- Code review
+- Documentation updates
+- Final deployment checking
+
+The GitHub Project Board will be updated so that completed Iteration 3 tasks and resolved bugs are moved to **Done**.
+
+### Reflection
+
+Practical 10 brings together the work completed across all three iterations. Iteration 1 established the main food stall browsing functions, Iteration 2 expanded the website with search, filtering and ratings and reviews, and Iteration 3 focused on testing and final refinement.
+
+The final review helped the team confirm that CampusBite is ready for demonstration and that the development process is supported by clear evidence in GitHub and the project documentation.
