@@ -1,6 +1,7 @@
 import MockLogin from "./components/MockLogin";
 import { useEffect, useState } from "react";
 import "./App.css";
+import { supabase } from "./supabase";
 
 function App() {
   const stalls = [
@@ -193,15 +194,9 @@ function App() {
   const [reviewName, setReviewName] = useState("");
   const [reviewRating, setReviewRating] = useState("5");
   const [reviewComment, setReviewComment] = useState("");
-  const [submittedReviews, setSubmittedReviews] = useState(() => {
-    const savedReviews = localStorage.getItem("campusBiteReviews");
-
-    if (savedReviews) {
-      return JSON.parse(savedReviews);
-    }
-
-    return {};
-  });
+  const [submittedReviews, setSubmittedReviews] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+ 
 
   const categories = [
     "All",
@@ -213,8 +208,40 @@ function App() {
   ];
 
   useEffect(() => {
-    localStorage.setItem("campusBiteReviews", JSON.stringify(submittedReviews));
-  }, [submittedReviews]);
+    async function loadReviews() {
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("id, stall_id, name, rating, comment, created_at")
+        .order("created_at", { ascending: true });
+
+      if (error) {
+        console.error("Failed to load reviews:", error);
+        return;
+      }
+
+      const groupedReviews = (data || []).reduce((groups, review) => {
+        const stallId = review.stall_id;
+
+        if (!groups[stallId]) {
+          groups[stallId] = [];
+        }
+
+        groups[stallId].push({
+          id: review.id,
+          name: review.name,
+          rating: review.rating,
+          comment: review.comment,
+          createdAt: review.created_at,
+        });
+
+        return groups;
+      }, {});
+
+      setSubmittedReviews(groupedReviews);
+    }
+
+    loadReviews();
+  }, []);
 
   function handleExploreClick() {
     document.getElementById("stalls")?.scrollIntoView({ behavior: "smooth" });
@@ -234,18 +261,60 @@ function App() {
     setSortOption("Default");
   }
 
-  function handleSubmitReview(event) {
+  async function handleSubmitReview(event) {
     event.preventDefault();
 
     if (!selectedStall || reviewComment.trim() === "") {
       alert("Please write a review before submitting.");
       return;
     }
+ 
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
-    const newReview = {
-      name: reviewName.trim() || "Anonymous",
+    if (userError || !user) {
+      alert("Please log in before submitting a review.");
+      return;
+    }
+
+    const userDisplayName =
+      user.user_metadata?.display_name ||
+      user.email?.split("@")[0] ||
+      "Student";
+
+    const reviewToInsert = {
+      stall_id: selectedStall.id,
+      user_id: user.id,
+      name: userDisplayName,
       rating: Number(reviewRating),
       comment: reviewComment.trim(),
+    };
+
+    setIsSubmitting(true);
+
+    const { data, error } = await supabase
+      .from("reviews")
+      .insert(reviewToInsert)
+      .select("id, stall_id, user_id, name, rating, comment, created_at")
+      .single();
+
+    setIsSubmitting(false);
+
+    if (error) {
+      console.error("Failed to submit review:", error);
+      alert("Failed to submit review. Please try again.");
+      return;
+    }
+
+    const savedReview = {
+      id: data.id,
+      userId: data.user_id,
+      name: data.name,
+      rating: data.rating,
+      comment: data.comment,
+      createdAt: data.created_at,
     };
 
     setSubmittedReviews((previousReviews) => {
@@ -253,13 +322,15 @@ function App() {
 
       return {
         ...previousReviews,
-        [selectedStall.id]: [...stallReviews, newReview],
+        [selectedStall.id]: [...stallReviews, savedReview],
       };
     });
 
     setReviewName("");
     setReviewRating("5");
     setReviewComment("");
+
+    alert("Review submitted successfully.");
   }
 
   const filteredStalls = stalls
@@ -382,12 +453,7 @@ function App() {
         </section>
 
         <section className="search-section">
-          <input
-            type="text"
-            placeholder="Search by stall name, cuisine type, location, or price..."
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-          />
+          
         </section>
 
         <section className="filter-section">
@@ -525,7 +591,9 @@ function App() {
                     onChange={(event) => setReviewComment(event.target.value)}
                   />
 
-                  <button type="submit">Submit Review</button>
+                  <button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Submitting..." : "Submit Review"}
+                  </button>
                 </form>
               </div>
             </div>
