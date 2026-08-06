@@ -1,977 +1,439 @@
-# CampusBite Food Stall Website
-# Campus-Food-Review-Website-PC3
+# CampusBite – Campus Food Review and Discovery Platform
 
-# CampusBite - Campus Food Review & Discovery Platform
+## 1. Project Overview
 
-## Project Description
+CampusBite is a web-based campus food discovery and review platform developed for university students. It provides one place where users can browse campus food stalls, search and filter options, compare menus and prices, check opening hours and locations, read reviews, create an account, log in, and submit authenticated reviews.
 
-CampusBite is a modern web-based platform designed to enhance the campus dining experience for university students.
+The project addresses the problem of scattered and unreliable campus food information. By combining stall information and student feedback in one responsive platform, CampusBite helps students make faster and better-informed dining decisions.
 
-It solves the common problem of scattered and unreliable food information by providing a centralized hub for campus food stalls. Students can easily discover stalls, view detailed menus and prices, read authentic peer reviews, and make informed dining decisions. At the same time, the platform offers valuable feedback to food vendors, helping them improve service quality and offerings.
+## 2. Project Links
 
-## GitHub Link
+- **GitHub Repository:** https://github.com/BaoJiatao/campus-food-review-website-pc3
+- **Deployed Website:** https://campus-food-review-website-pc3.vercel.app
 
-GitHub Repository: https://github.com/BaoJiatao/campus-food-review-website-pc3
-
-## Deployed Website Link
-
-Website Link: https://campus-food-review-website-pc3.vercel.app
-
-## Team Members
+## 3. Team Members
 
 | Name | Role |
 |---|---|
 | Bao Jiatao | Project Lead / Developer |
 | Lin Yan | Frontend Developer / UI/UX Designer |
 
-## Project Objectives
+## 4. Project Objectives
+
+- Create a central and reliable platform for campus food discovery.
+- Help students compare stalls, menus, prices, ratings and reviews.
+- Reduce the time students spend searching for campus food information.
+- Provide a clear feedback channel between students and food vendors.
+- Apply agile and iterative software engineering practices.
+- Deliver a working web application with a modern GUI, database and cloud deployment.
+
+## 5. Target Users and User Needs
+
+The main target users are university students who regularly eat on campus. Interviews and informal feedback identified the following needs:
+
+- Food stall information should be easy to find.
+- Menus, prices, locations and opening hours should be clearly displayed.
+- Search, category filtering and sorting should help users compare options quickly.
+- Ratings and peer reviews should support dining decisions.
+- Review submissions should be linked to authenticated users.
+- The interface should work on desktop and mobile screen sizes.
+
+## 6. Requirements and User Stories
+
+| No. | User Story | Priority | Estimated Effort | Final Status |
+|---:|---|---:|---:|---|
+| 1 | As a student, I want to browse all campus food stalls so that I can discover available options. | 10 | 2 days | Completed |
+| 2 | As a student, I want to view stall details, including menu, prices, location and opening hours. | 10 | 3 days | Completed |
+| 3 | As a student, I want to search food stalls by name or cuisine type so that I can find food quickly. | 20 | 2 days | Completed |
+| 4 | As a student, I want to filter and sort stalls so that I can compare suitable options efficiently. | 20 | 2 days | Completed |
+| 5 | As a student, I want to view ratings and reviews so that I can assess food quality. | 20 | 3 days | Completed |
+| 6 | As a student, I want to register and log in so that my review activity can be associated with my account. | 30 | 3 days | Completed |
+| 7 | As a logged-in student, I want to submit a star rating and written review so that I can share my experience. | 30 | 4 days | Completed |
+| 8 | As a student, I want the website to work on different screen sizes so that I can use it on desktop or mobile. | 30 | 3 days | Completed |
+| 9 | As a student, I want to upload food photos and save favourite stalls. | 40 | 5 days | Future Work |
+| 10 | As an administrator or vendor, I want to manage stall information and moderate reviews. | 50 | 5 days | Future Work |
+
+The implementation order was based on user value, technical dependencies, development risk and available time. Core browsing and stall information were completed first, followed by search, filtering, sorting, reviews, authentication, database persistence, testing and final refinement.
+
+### 6.1 Acceptance and Quality Criteria
+
+The main acceptance criteria were:
+
+- All stall cards load without layout errors.
+- Search is case-insensitive and returns matching stalls.
+- Category filters and sorting options update the displayed list correctly.
+- Stall details display the correct menu, prices, location and opening hours.
+- Users can register, log in and log out through Supabase Authentication.
+- Only authenticated users can submit reviews.
+- Valid reviews are stored in Supabase and displayed for the correct stall.
+- Empty review comments are rejected.
+- The deployed website remains usable on desktop and mobile screen sizes.
+
+## 7. Final Implemented Features
+
+The final CampusBite system includes:
+
+- Browse six campus food stalls.
+- View stall names, categories, descriptions, ratings and price ranges.
+- Open detailed stall information.
+- View menus, prices, opening hours and locations.
+- Search by stall name, cuisine type, location or price range.
+- Filter stalls by category.
+- Sort stalls by rating or starting price.
+- Clear search, category and sorting selections.
+- View existing and submitted reviews.
+- Register, log in and log out using Supabase Authentication.
+- Require authentication before review submission.
+- Store submitted reviews in Supabase PostgreSQL.
+- Retrieve and display reviews from Supabase.
+- Validate empty comments and authentication state.
+- Use a responsive interface on desktop and mobile screen sizes.
+- Deploy the final React application through Vercel.
+
+## 8. System Design
+
+### 8.1 Architecture Design
+
+CampusBite uses a client–cloud architecture:
+
+1. **Presentation layer:** React components display the navigation, stall cards, search controls, category filters, sorting controls, authentication modal, stall details and review form.
+2. **Application layer:** JavaScript and React state manage searching, filtering, sorting, modal interaction, authentication state, validation and review updates.
+3. **Data and authentication layer:** Supabase Authentication manages user sessions, while Supabase PostgreSQL stores persistent review records.
+4. **Deployment layer:** Vercel hosts the production build created by Vite.
+
+```mermaid
+flowchart LR
+    U[Student User] --> UI[React User Interface]
+    UI --> A[Search, Filter, Sort and Review Logic]
+    UI --> AUTH[Supabase Authentication]
+    A --> DB[(Supabase PostgreSQL Reviews)]
+    AUTH --> DB
+    UI --> V[Vercel Deployment]
+```
+
+### 8.2 Main Components
+
+- **App:** Coordinates stall data, filtering, sorting, selected-stall state, review loading and review submission.
+- **MockLogin:** Despite its original development name, the final component uses Supabase Authentication for registration, login, session tracking and logout.
+- **Stall Cards:** Display summary information and provide access to stall details.
+- **Search and Category Controls:** Narrow the displayed stall list.
+- **Sorting Control:** Orders stalls by rating or price.
+- **Stall Detail Section:** Displays menus, prices, opening hours, ratings and reviews.
+- **Review Form:** Validates and submits authenticated reviews.
+- **Supabase Client:** Connects the React application to authentication and database services.
 
-- Create a centralized, reliable, and user-friendly platform for campus food discovery
-- Help students make faster and better dining decisions
-- Build a transparent feedback loop between students and food vendors
-- Deliver a high-quality web application using iterative development
+The design separates user-interface responsibilities from authentication and database access. Reusable rendering patterns and shared styles reduce duplication and support maintainability.
 
-## Key Features
-
-### Iteration 1 – Core MVP
-
-- Homepage with all campus food stalls
-- Detailed stall information, including menu, prices, operating hours, and location
-- Average rating display and recent reviews
-
-### Iteration 2 – User Interaction
-
-- Advanced search and filtering
-- Star rating and text review system
-
-### Future Iterations
-
-- AI-powered food recommendations
-- Photo uploads with reviews
-- Favorites and trending rankings
-- Vendor or admin management dashboard
-
-## Technology Stack
-
-- Frontend: HTML, CSS, JavaScript / React
-- Backend: Node.js and Express.js
-- Database: MongoDB
-- Version Control: Git and GitHub
-- Deployment: Vercel
-
-## Development Approach
-
-This project follows an iterative development approach. Instead of building the whole system at once, the team focuses on small working features in each iteration. User feedback is collected and used to improve the next version of the website.
-
-## Target Users
-
-The target users are university students who frequently dine on campus. These users need a faster and clearer way to find food stall information, compare prices, check opening hours, and read reviews before deciding where to eat.
-
-## User Requirements from Interview
-
-Based on interviews with target users, students often face the following problems:
-
-- Food stall information is difficult to find
-- Students waste time checking which stalls are open
-- Prices and menus are not always clear
-- Students rely on peer recommendations
-- Ratings and reviews are useful when choosing food
-- Search and filter functions can help students save time
-
-## Initial Backlog Ideas
-
-Here are 10 rough user stories for the project:
-
-1. As a student, I want to browse all food stalls on campus so that I can see what options are available.
-2. As a student, I want to view detailed information of a food stall, including menu, price, opening hours, and location.
-3. As a student, I want to see the average rating and recent reviews of each stall.
-4. As a student, I want to search for food stalls by name or cuisine type.
-5. As a student, I want to filter stalls by price range, rating, or category.
-6. As a student, I want to submit a star rating and write a review for a food stall.
-7. As a student, I want to upload a photo along with my review.
-8. As a student, I want to save my favorite food stalls for future reference.
-9. As a student, I want to get personalized recommendations, such as “What to eat today?”.
-10. As an admin or vendor, I want to manage food stall information and view reviews.
-
-## User Stories with Priority and Effort
-
-| No. | Title | User Story | Priority | Estimated Effort |
-|---|---|---|---|---|
-| 1 | Browse Food Stalls | As a student, I want to browse all campus food stalls so that I can easily discover available options. | 10 | 2 days |
-| 2 | View Stall Details | As a student, I want to view detailed stall information such as menu, prices, location, and opening hours so that I can make informed decisions. | 10 | 3 days |
-| 3 | Search Food Stalls | As a student, I want to search food stalls by name or cuisine type so that I can find specific food quickly. | 20 | 2 days |
-| 4 | Filter Food Options | As a student, I want to filter stalls by price range, rating, and category so that I can narrow down choices efficiently. | 20 | 2 days |
-| 5 | View Ratings and Reviews | As a student, I want to see average ratings and recent reviews so that I can assess food quality before buying. | 20 | 3 days |
-| 6 | Submit Reviews | As a student, I want to submit ratings and written reviews for stalls so that I can share my experience and help others. | 30 | 4 days |
-| 7 | Upload Food Photos | As a student, I want to upload photos with my reviews so that reviews become more informative and engaging. | 30 | 3 days |
-| 8 | Save Favorite Stalls | As a student, I want to save my favorite stalls so that I can easily access them later. | 40 | 2 days |
-| 9 | Personalized Recommendations | As a student, I want personalized food recommendations based on my preferences and past ratings. | 40 | 5 days |
-| 10 | Vendor/Admin Management | As a vendor or admin, I want to manage stall information and respond to reviews so that information stays accurate and up-to-date. | 50 | 5 days |
-
-## Iteration 1 Plan
-
-Based on the feedback collected in Practical 2, the team selected the most important features for Iteration 1.
-
-### Selected User Stories
-
-| User Story | Priority | Status |
-|---|---|---|
-| Browse Food Stalls | 10 | Completed |
-| View Stall Details | 10 | In Progress |
-| View Ratings and Reviews | 20 | To Do |
-
-## Iteration Board
-
-### To Do
-
-- View Ratings and Reviews
-
-### In Progress
-
-- View Stall Details
-
-### Done
-
-- Browse Food Stalls
-
-## Work Completed
-
-During Iteration 1, the team completed the Browse Food Stalls feature. A simple homepage was developed to display available food stalls on campus. Students can now see a list of food options without needing to walk around campus to check each stall individually.
-
-## Challenges Encountered
-
-One challenge was deciding which features should be included in the first iteration. After reviewing the interview results, the team realised that students cared most about finding food information quickly. Therefore, the team chose to prioritise food stall browsing before implementing more advanced features.
-
-Another challenge was keeping the interface simple while still displaying useful information. The team discussed different layouts and agreed to begin with a basic design that can be improved in later iterations.
-
-## Project Status
-
-The basic website has been completed and uploaded to GitHub. The current version provides a working foundation for the CampusBite project. More features such as search, filter, ratings, reviews, and admin management can be added in future iterations.
-
-Start Date: May 2026  
-Last Updated: June 2026
-
-## Practical Week 3 – Iteration 1
-
-### Objective
-
-The objective of Practical Week 3 was to review the planned user stories for Iteration 1 and implement at least two user stories during the practical class.
-
-### Iteration 1 User Stories
-
-| User Story | Priority | Effort | Status |
-|---|---:|---:|---|
-| Browse Food Stalls | 10 | 2 days | Done |
-| View Stall Details | 10 | 3 days | Done |
-| View Ratings and Reviews | 20 | 3 days | In Progress |
-
-### GitHub Project Board
-
-The team created a GitHub Project Board to monitor the progress of Iteration 1. The board includes To do, In progress, and Done columns.
-
-Current board status:
-
-- Done: Browse Food Stalls
-- Done: View Stall Details
-- In Progress: View Ratings and Reviews
-
-### Work Completed
-
-During Iteration 1, the team completed two user stories: Browse Food Stalls and View Stall Details. These features allow students to browse available campus food stalls and view basic stall information such as menu items, prices, opening hours, and location.
-
-### Burn Down Graph
-
-![Iteration 1 Burn Down Graph](burndown.png)
-
-The burn down graph tracks the remaining work for Iteration 1. The total estimated effort was 8 days. The ideal line shows the expected progress if the work decreases evenly each day. The actual line shows that the team completed two user stories, Browse Food Stalls and View Stall Details, which represent 5 days of work. The remaining 3 days belong to View Ratings and Reviews, which is still in progress.
-
-### Reflection
-
-This practical helped the team understand how to manage user stories using GitHub Issues, labels, and a Project Board. By moving tasks from To do to In progress and Done, the team could clearly track development progress. Although not all user stories were completed, the team successfully implemented at least two core user stories for Iteration 1.
-
-## Practical 4: Iteration 1 - Execution and Tracking
-
-In Practical 4, the project focuses on task breakdown, task estimation, GitHub issue tracking, class diagram, sequence diagram, daily commits and pull request review.
-This branch is used to practise pull request creation and code review.
-
-# Practical 6: Iteration 2 - Review and Planning
-
-## Objective
-
-The objective of Practical Week 6 was to review the progress achieved during Iteration 1 and prepare the development plan for Iteration 2. The team analysed the completed work, calculated the actual velocity, reviewed the software design, and updated the backlog based on the remaining user stories. This helped the team better organise the next stage of development and continue improving the CampusBite website.
-
----
-
-## Actual Velocity
-
-At the beginning of Iteration 1, the team estimated a total effort of **8 working days**. During the iteration, the team successfully completed the core features of the project, including browsing food stalls and viewing stall details. Additional improvements, such as the search function, category filtering and stall detail modal, were also implemented.
-
-Overall, the team completed approximately **5 days of planned work** during Iteration 1. The remaining work mainly involves the Ratings & Reviews feature together with several interface improvements, which have been moved into Iteration 2. The calculated velocity provides a more realistic estimate for planning the next iteration and helps the team avoid overcommitting.
-
----
-
-## SRP and DRY Review
-
-The team reviewed the project structure to evaluate whether the implementation follows the **Single Responsibility Principle (SRP)** and the **Don't Repeat Yourself (DRY)** principle.
-
-### Single Responsibility Principle (SRP)
-
-Most components perform a single responsibility and have a clear purpose.
-
-- **StallCard** is responsible for displaying summary information for each food stall.
-- **SearchBar** handles searching food stalls by keyword.
-- **CategoryFilter** is responsible for filtering stalls based on food categories.
-- **StallDetailModal** displays detailed information such as menus, prices and opening hours.
-
-Keeping these responsibilities separate makes the project easier to maintain and extend in future iterations.
-
-### Don't Repeat Yourself (DRY)
-
-The project also follows the DRY principle by reducing duplicated code.
-
-- Reusable stall card components are used throughout the homepage.
-- Search and filtering logic are implemented as reusable functions.
-- Shared CSS styles are applied across different pages instead of repeating the same styling code.
-- Common layouts are reused to improve consistency and simplify future maintenance.
-
-Although the overall structure follows DRY well, some UI styling can still be further organised during Iteration 2.
-
----
-
-## Burn Down Graph
-
-The burn down graph below summarises the final progress of Iteration 1. The team completed most of the planned work, while the remaining tasks will continue into Iteration 2.
-
-![Iteration 1 Burn Down Graph](Iteration%201%EF%BC%88Final%EF%BC%89.png)
----
-
-## Iteration 2 Backlog
-
-Based on the remaining work from Iteration 1 and the team's actual velocity, the following backlog has been prepared for Iteration 2.
-
-| User Story | Priority | Status |
-|------------|----------|--------|
-| View Ratings and Reviews | High | In Progress |
-| Improve CSS Layout | Medium | In Progress |
-| Improve Modal Layout | Medium | To Do |
-| Create Pull Request for Review | Medium | To Do |
-| Review and Merge Pull Request | Medium | To Do |
-| Website Testing and Bug Fixes | High | To Do |
-
-The team decided to focus on completing the unfinished core functionality before introducing additional features. This approach reduces development risk and ensures that the main user requirements are fully implemented before expanding the system.
-
----
-
-## GitHub Project Board
-
-The GitHub Project Board was updated to reflect the current development progress.
-
-### To Do
-
-- Improve Modal Layout
-- Review and Merge Pull Request
-- Final Website Testing
-- Take Testing Screenshots
-- Fix Remaining Bugs
-
-### In Progress
-
-- View Ratings and Reviews
-- Improve CSS Layout
-- Create Pull Request for Review
-
-### Done
-
-- Browse Food Stalls
-- View Stall Details
-- Search Function
-- Category Filter
-- Stall Detail Modal
-- Homepage Responsive Layout
-- Class Diagram
-- Sequence Diagram
-
-The updated board helps the team clearly monitor development progress and allocate tasks among team members throughout Iteration 2.
-
----
-
-## Completed vs Unfinished User Stories
-
-### Completed User Stories
-
-- Browse Food Stalls
-- View Stall Details
-- Search Food Stalls
-- Filter Food Options
-- Stall Detail Modal
-- Homepage Responsive Layout
-- Class Diagram
-- Sequence Diagram
-
-### Unfinished User Stories
-
-- View Ratings and Reviews
-- Improve CSS Layout
-- Improve Modal Layout
-- Pull Request Review
-- Final Website Testing
-- Bug Fixes
-
-The unfinished user stories have been prioritised for completion during Iteration 2 before introducing any new functionality.
-
----
-
-## GitHub Pages Update
-
-The latest completed features were pushed to GitHub and deployed to the project website. Updating GitHub Pages after each completed user story allows the team to verify the latest version online and receive feedback earlier in the development process. This also helps ensure that the deployed version stays consistent with the GitHub repository.
-
----
-
-## Reflection
-
-Practical Week 6 allowed the team to review the overall progress of Iteration 1 before continuing development.
-
-By analysing the team's actual velocity and reviewing the remaining backlog, we gained a clearer understanding of what had been completed and what still required attention. GitHub Issues and the Project Board continued to be useful for tracking progress, assigning tasks and improving collaboration.
-
-The review also showed that most core features have already been implemented successfully. The remaining work mainly focuses on improving the Ratings & Reviews feature, refining the user interface, conducting testing and preparing the project for completion.
-
-Overall, the team now has a more realistic development plan for Iteration 2 based on actual project progress rather than initial estimates.
-
-## Iteration 2 Plan
-
-During Iteration 2, the team will prioritise completing the Ratings & Reviews feature, improving the website interface, fixing remaining issues, and carrying out additional testing. Once these tasks are completed, the team plans to continue developing advanced features such as personalised recommendations and user favourites.
-
-# Practical 7: Iteration 2 - Test-Driven Development
-
-## Testing Plan
-
-### Objective
-
-The objective of Practical 7 is to apply Test-Driven Development (TDD) during Iteration 2. After completing most of the core features in Iteration 1, the team will now focus on verifying that the implemented functions work correctly and remain stable as new features are added.
-
-Testing also helps the team detect bugs earlier, improve software quality and reduce the possibility of breaking existing features during future development.
-
----
-
-### Current Project Status
-
-At the beginning of Practical 7, the CampusBite project has already completed most of the core user stories, including:
-
-- Browse Food Stalls
-- View Stall Details
-- Search Food Stalls
-- Category Filter
-- Stall Detail Modal
-- Responsive Homepage Layout
-
-The Ratings & Reviews feature is currently under development and will continue during Iteration 2. Therefore, the testing activities will mainly focus on both completed features and the newly developed functionality.
-
----
-
-### Testing Strategy
-
-The team decided to combine manual testing and automated testing throughout Iteration 2.
-
-Manual testing is first used during development to quickly verify new features and user interactions. After a feature works correctly, automated tests will be written to ensure the same functionality continues working after future code changes.
-
-This follows the Test-Driven Development (TDD) approach by defining expected behaviour through test cases before verifying the implementation.
-
----
-
-### Testing Scope
-
-Based on the current project progress, the following user stories have been selected for testing:
-
-1. Browse Food Stalls
-2. View Stall Details
-3. Search Food Stalls
-4. Filter Food Options
-5. View Ratings and Reviews
-
-These user stories represent the main functionality currently available in the CampusBite website and cover the most common user interactions.
-
----
-
-### Types of Testing
-
-#### Functional Testing
-
-Functional testing checks whether each feature behaves according to the user requirements.
-
-Examples include:
-
-- Displaying all food stalls correctly
-- Opening stall details successfully
-- Searching stalls using keywords
-- Filtering stalls by category
-- Viewing ratings and reviews correctly
-
----
-
-#### User Interface Testing
-
-UI testing verifies that all visible components display correctly and remain usable.
-
-The team will check:
-
-- Stall cards
-- Search bar
-- Category buttons
-- Stall detail modal
-- Ratings and review section
-- Responsive layout
-
----
-
-#### Input Validation Testing
-
-Input validation testing ensures the system handles invalid or unexpected user input correctly.
-
-Examples include:
-
-- Empty search keywords
-- Invalid search terms
-- Empty review submission
-- Invalid rating values
-
----
-
-#### Regression Testing
-
-Regression testing is performed whenever new code is added to ensure existing features continue working correctly.
-
-Since Iteration 2 mainly extends the existing website, regression testing is important after implementing the Ratings & Reviews feature and interface improvements.
-
----
-
-### Automated Testing Plan
-
-The team plans to implement automated tests for the selected user stories.
-
-Automated tests will verify:
-
-- Stall cards render correctly.
-- Search returns the correct results.
-- Category filtering displays matching stalls.
-- Stall detail modal opens correctly.
-- Ratings and reviews display expected information.
-
-At least fifteen automated tests will be implemented during this practical to improve software reliability and reduce manual testing effort.
-
----
-
-### Testing Environment
-
-The project is developed using React and Vite.
-
-Testing will be performed in the local development environment before code is committed to GitHub. Automated tests will be executed before pull requests are merged to ensure new changes do not introduce unexpected errors.
-
-The website will also be tested manually using desktop and mobile browser sizes to confirm that the interface remains responsive and user-friendly.
-
----
-
-### Expected Outcomes
-
-After Practical 7, the project should achieve the following:
-
-- Main user stories are verified through test cases.
-- At least fifteen automated tests are implemented.
-- Existing features remain stable after new code changes.
-- Bugs are detected earlier during development.
-- The overall quality and maintainability of the CampusBite website are improved.
-
-## Selected User Stories
-
-For Practical 7, the team selected five core user stories that represent the main functionality of the current CampusBite system. These user stories have either been completed during Iteration 1 or are currently being developed in Iteration 2. They will be used to design manual test cases and automated tests.
-
-### User Story 1 – Browse Food Stalls
-
-**User Story**
-
-> As a student, I want to browse all campus food stalls so that I can easily discover available food options.
-
----
-
-#### Test Case TC-001
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-001 |
-| **Test Objective** | Verify that all food stalls are displayed on the homepage. |
-| **Precondition** | The CampusBite website has been launched successfully. |
-| **Test Steps** | 1. Open the CampusBite homepage.<br>2. Wait for the page to finish loading. |
-| **Expected Result** | All available food stalls are displayed as stall cards on the homepage. |
-
----
-
-#### Test Case TC-002
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-002 |
-| **Test Objective** | Verify that each stall card displays the correct information. |
-| **Precondition** | The homepage has loaded successfully. |
-| **Test Steps** | 1. View any food stall card on the homepage.<br>2. Check the displayed information. |
-| **Expected Result** | Each stall card displays the stall name, image, food category and a short description correctly. |
-
----
-
-#### Test Case TC-003
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-003 |
-| **Test Objective** | Verify that users can browse all food stalls by scrolling through the homepage. |
-| **Precondition** | The homepage contains multiple food stalls. |
-| **Test Steps** | 1. Open the homepage.<br>2. Scroll from the top to the bottom of the page. |
-| **Expected Result** | All food stalls can be viewed successfully without missing content or layout errors. |
-
----
-
-### User Story 2 – View Stall Details
-
-**User Story**
-
-> As a student, I want to view detailed information about a food stall, including menu items, prices, opening hours and location, so that I can make informed dining decisions.
-
----
-
-#### Test Case TC-004
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-004 |
-| **Test Objective** | Verify that the stall detail modal opens successfully when a food stall is selected. |
-| **Precondition** | The CampusBite homepage has loaded successfully. |
-| **Test Steps** | 1. Open the homepage.<br>2. Click on any food stall card. |
-| **Expected Result** | The stall detail modal opens and displays the selected food stall information. |
-
----
-
-#### Test Case TC-005
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-005 |
-| **Test Objective** | Verify that the correct stall information is displayed in the detail modal. |
-| **Precondition** | The stall detail modal is open. |
-| **Test Steps** | 1. Select any food stall.<br>2. Check the displayed information inside the modal. |
-| **Expected Result** | The modal correctly displays the stall name, menu items, prices, opening hours and location. |
-
----
-
-#### Test Case TC-006
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-006 |
-| **Test Objective** | Verify that users can close the stall detail modal successfully. |
-| **Precondition** | The stall detail modal is open. |
-| **Test Steps** | 1. Open any stall detail modal.<br>2. Click the close button or outside the modal. |
-| **Expected Result** | The modal closes successfully and the homepage remains displayed without any errors. |
-
----
-
-### User Story 3 – Search Food Stalls
-
-**User Story**
-
-> As a student, I want to search food stalls by name so that I can quickly find the food I want.
-
----
-
-#### Test Case TC-007
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-007 |
-| **Test Objective** | Verify that users can search for a food stall using a valid keyword. |
-| **Precondition** | The CampusBite homepage has loaded successfully and food stall data is available. |
-| **Test Steps** | 1. Open the homepage.<br>2. Enter a valid food stall name or keyword into the search bar.<br>3. Press Enter or wait for the search results. |
-| **Expected Result** | Only food stalls that match the search keyword are displayed. |
-
----
-
-#### Test Case TC-008
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-008 |
-| **Test Objective** | Verify that the system handles search keywords with no matching results. |
-| **Precondition** | The homepage has loaded successfully. |
-| **Test Steps** | 1. Enter a keyword that does not match any food stall.<br>2. Execute the search. |
-| **Expected Result** | No food stalls are displayed and a suitable message such as "No results found" is shown. |
-
----
-
-#### Test Case TC-009
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-009 |
-| **Test Objective** | Verify that the search function works regardless of letter case. |
-| **Precondition** | Food stall data has been loaded successfully. |
-| **Test Steps** | 1. Enter a valid food stall name using uppercase or lowercase letters.<br>2. Execute the search. |
-| **Expected Result** | The correct food stall is displayed regardless of whether uppercase or lowercase letters are used. |
-
----
-
-### User Story 4 – Filter Food Options
-
-**User Story**
-
-> As a student, I want to filter food stalls by category so that I can narrow down my choices more efficiently.
-
----
-
-#### Test Case TC-010
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-010 |
-| **Test Objective** | Verify that users can filter food stalls by selecting a food category. |
-| **Precondition** | The CampusBite homepage has loaded successfully. |
-| **Test Steps** | 1. Open the homepage.<br>2. Select a food category from the category filter. |
-| **Expected Result** | Only food stalls belonging to the selected category are displayed. |
-
----
-
-#### Test Case TC-011
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-011 |
-| **Test Objective** | Verify that changing the selected category updates the displayed food stalls correctly. |
-| **Precondition** | A food category has already been selected. |
-| **Test Steps** | 1. Select one food category.<br>2. Select a different food category. |
-| **Expected Result** | The displayed food stalls are updated immediately to match the newly selected category. |
-
----
-
-#### Test Case TC-012
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-012 |
-| **Test Objective** | Verify that users can clear the category filter and display all food stalls again. |
-| **Precondition** | A category filter is currently applied. |
-| **Test Steps** | 1. Click the "All" category or reset the filter.<br>2. Observe the homepage. |
-| **Expected Result** | All available food stalls are displayed again without any category restrictions. |
-
----
-
-### User Story 5 – View Ratings and Reviews
-
-**User Story**
-
-> As a student, I want to view ratings and reviews for each food stall so that I can decide where to eat based on other students' experiences.
-
----
-
-#### Test Case TC-013
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-013 |
-| **Test Objective** | Verify that the average rating is displayed for the selected food stall. |
-| **Precondition** | The CampusBite homepage has loaded successfully and rating data is available. |
-| **Test Steps** | 1. Open the homepage.<br>2. Select a food stall.<br>3. View the rating section in the stall details. |
-| **Expected Result** | The average rating for the selected food stall is displayed correctly. |
-
----
-
-#### Test Case TC-014
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-014 |
-| **Test Objective** | Verify that recent reviews are displayed for the correct food stall. |
-| **Precondition** | The selected food stall contains review data. |
-| **Test Steps** | 1. Open the details of a food stall.<br>2. Scroll to the reviews section.<br>3. Check the displayed reviews. |
-| **Expected Result** | The recent reviews associated with the selected food stall are displayed correctly. |
-
----
-
-#### Test Case TC-015
-
-| Item | Description |
-|------|-------------|
-| **Test ID** | TC-015 |
-| **Test Objective** | Verify that the system handles a food stall with no available reviews. |
-| **Precondition** | A food stall with no review data is available. |
-| **Test Steps** | 1. Open the details of a food stall with no reviews.<br>2. View the ratings and reviews section. |
-| **Expected Result** | The page remains stable and displays a clear message such as "No reviews yet" instead of showing incorrect or empty content. |
-
-# Practical 8: Iteration 3
-
-## Objective
-
-The objective of Practical 8 is to continue Iteration 3 by applying Test-Driven Development (TDD) while refining the CampusBite website. Building on the completed work from Iteration 2, the team focuses on improving software quality, fixing remaining issues, performing final testing, and preparing the project for completion.
-
----
-
-## Iteration 2 Reflection
-
-Iteration 2 was successfully completed with the implementation of the major planned user stories. During this iteration, the team finished the search function, category filter, ratings and reviews, responsive layout improvements, and overall interface refinement.
-
-Compared with Iteration 1, the project became more complete and user-friendly. The GitHub Project Board was continuously updated to monitor development progress, while automated testing helped identify and prevent software defects during implementation.
-
-The completed work from Iteration 2 provides a stable foundation for the final iteration.
-
----
-
-## Actual Velocity
-
-The team completed nearly all planned user stories during Iteration 2.
-
-**Planned Velocity:** 100%
-
-**Actual Velocity:** Approximately 95–100%
-
-Only minor improvements, optimisation tasks, documentation updates, and final verification remain for Iteration 3.
-
----
-
-## Burn Down Graph
-
-![Iteration 2 Burn Down Graph](Iteration 2.png)
-The burn down graph shows that the remaining workload decreased steadily throughout Iteration 2. Most development tasks were completed before the end of the sprint, demonstrating consistent progress and effective sprint planning.
-
----
-
-## Iteration 3 Backlog
-
-The remaining backlog for Iteration 3 focuses mainly on software quality rather than new functionality.
-
-### Remaining Tasks
-
-- Improve UI consistency
-- Fix minor layout issues
-- Refactor existing code
-- Perform final regression testing
-- Verify automated test results
-- Improve project documentation
-- Prepare final deployment
-- Complete final project review
-
----
-
-## GitHub Project Board
-
-The GitHub Project Board has been updated to reflect the current progress of Iteration 3.
-
-### Completed Features
-
-- Browse Food Stalls
-- View Stall Details
-- Search Food Stalls
-- Category Filter
-- Ratings & Reviews
-- Responsive Layout
-
-### Current Focus
-
-- Final testing
-- Bug fixing
-- Code refactoring
-- Documentation updates
-
----
-
-## Mock Object Research
-
-To improve testing reliability, the team researched the use of Mock Objects in software testing.
-
-Mock Objects simulate external dependencies such as databases or APIs, allowing components to be tested independently without relying on real services. This helps produce repeatable and stable automated tests while reducing the influence of external factors.
-
-Although the current project mainly uses static data, mock objects can be introduced in future versions when integrating backend APIs or databases.
-
-Example applications include:
-
-- Simulating food stall data
-- Simulating user reviews
-- Simulating API responses
-- Simulating database queries
-
-Using Mock Objects improves test isolation, increases test reliability, and supports the Test-Driven Development process.
-
----
-
-## Reflection
-
-Practical 8 marks the final development stage of the project. Compared with previous iterations, the focus shifted from implementing new features to improving software quality, testing, and code maintainability.
-
-Applying Test-Driven Development encouraged the team to think about testing earlier in the development process, resulting in more reliable and maintainable code. Continuous use of GitHub Issues, Project Boards, Pull Requests, and automated testing also helped the team manage project progress effectively.
-
-Overall, Iteration 3 strengthened the stability and quality of the CampusBite platform and prepared the project for final delivery.
-This branch is used to practise pull request creation and code review.
-
-## Class Diagram
-
-The class diagram below shows the main components and data structure of the CampusBite food stall website.
+### 8.3 Class Diagram
 
 ![Class Diagram](class-diagram.png)
 
-## Sequence Diagram
+### 8.4 Sequence Diagram
 
-The sequence diagram below shows how a student searches for a stall and opens the stall detail modal.
+The sequence diagram shows how a student searches for a stall and opens its detailed information.
 
 ![Sequence Diagram](sequence-diagram.png)
 
-## Practical 9: Iteration 3 - Bug Tracking and System Testing
+### 8.5 Interface Design
 
-### Objective
+The interface follows a single-page layout with clear sections for discovery, comparison and review submission. The design uses:
 
-The objective of Practical 9 is to perform final system testing, track software defects using GitHub Issues and GitHub Projects, and verify that the CampusBite website is ready for the Week 10 demonstration. During this practical, the focus shifts from implementing new features to validating completed functionality, resolving defects, and improving the overall quality and stability of the system.
+- A prominent search area for quick discovery.
+- Category buttons and sorting controls for comparison.
+- Consistent stall cards for visual scanning.
+- A focused detail section for menu and review information.
+- A modal-style authentication interface.
+- Responsive CSS for smaller screens.
 
-### Bug Tracking
+The deployed website acts as the final interactive interface prototype and demonstrates the completed user flow.
 
-Following the completion of Iteration 3, the team conducted system testing on the completed features of the CampusBite website. Any bugs identified during testing were recorded as GitHub Issues and linked to their corresponding user stories.
+### 8.6 Database Design
 
-GitHub User Stories, GitHub Issues and the GitHub Project Board were used throughout the testing process to record, organise and monitor software defects. Each bug report includes a bug title, description, reproduction steps, expected result, actual result, severity and current status.
+The final version uses Supabase, which provides a hosted PostgreSQL database and authentication service.
 
-The reported bugs mainly involve:
+#### Reviews Table
 
-- Search Function
-- Category Filter
-- Stall Details
-- Ratings and Reviews
-- Responsive Layout
-- Documentation Updates
+| Column | Purpose |
+|---|---|
+| `id` | Unique identifier for each review |
+| `stall_id` | Identifies the related food stall |
+| `user_id` | Stores the authenticated Supabase user ID |
+| `name` | Stores the user display name |
+| `rating` | Stores the numeric rating |
+| `comment` | Stores the written review |
+| `created_at` | Stores the review creation time |
 
-### System Testing Plan
+```mermaid
+erDiagram
+    AUTH_USER ||--o{ REVIEW : submits
+    FOOD_STALL ||--o{ REVIEW : receives
 
-The system testing plan focuses on verifying that the major functions completed during Iteration 3 operate correctly before the final project demonstration. The detailed manual and automated test cases created in Practical 7 provide the basis for this final system testing.
+    AUTH_USER {
+        uuid id PK
+        string email
+        string display_name
+    }
 
-| Feature | Related User Story | Testing Objective | Expected Result | Status |
-|---------|-------------------|-------------------|-----------------|--------|
-| Search Function | US6 | Verify that searching by valid, invalid and empty keywords produces the correct results. | Search results are displayed accurately and appropriate messages are shown when required. | Planned |
-| Category Filter | US7 | Verify that food stalls can be filtered correctly by category and that filters can be cleared successfully. | Only matching food stalls are displayed and the filter resets correctly. | Planned |
-| Stall Details | US8 | Verify that the stall detail page displays complete and accurate information. | Stall name, menu items, prices, opening hours and location are displayed correctly. | Planned |
-| Ratings and Reviews | US9 | Verify that ratings and customer reviews are displayed correctly, including stalls without reviews. | Ratings and reviews are shown correctly and appropriate messages appear when no reviews exist. | Planned |
-| Final System Testing | US10 | Verify the overall stability of the website across supported browsers and screen sizes after all bug fixes have been completed. | All major features operate correctly without critical defects and the website is ready for deployment. | Planned |
+    FOOD_STALL {
+        string id PK
+        string name
+        string category
+        string location
+        string opening_hours
+    }
 
-### Testing Environment
+    REVIEW {
+        int id PK
+        string stall_id
+        uuid user_id
+        string name
+        int rating
+        string comment
+        datetime created_at
+    }
+```
 
-The final system testing will be carried out using both the local development version and the deployed CampusBite website.
+Food stall information is currently maintained in the frontend data structure, while user accounts and submitted reviews are managed through Supabase. Reviews are associated with stalls through `stall_id` and with authenticated users through `user_id`.
 
-Testing Environment:
+### 8.7 Non-Functional Requirements and Trade-offs
 
-- Frontend: React and Vite
-- Browsers: Google Chrome and Microsoft Edge
-- Devices: Desktop and Mobile
-- Deployment Platform: Vercel
-- Bug Tracking Tools: GitHub Issues and GitHub Projects
+| Area | Design Decision |
+|---|---|
+| Usability | Clear search, filters, sorting, consistent cards and focused details reduce user effort. |
+| Responsiveness | CSS adapts the layout for desktop and mobile screen sizes. |
+| Reliability | Reviews are stored in a cloud database instead of browser-only storage. |
+| Security | Supabase Authentication is required before a review can be submitted. |
+| Maintainability | React, reusable logic, Git version control and automated tests support future changes. |
+| Performance | Client-side filtering and Vite production builds keep interactions fast for the current dataset. |
 
-### Bug Tracking Workflow
+The team selected Supabase instead of building a custom server because it provided authentication and relational database services within the project schedule. Stall data remained in the frontend to control scope, while reviews were prioritised for persistent storage. This reduced development risk but means future versions should migrate stalls and menus into database tables.
 
-The team manages software defects using the following workflow:
+## 9. Technology Stack and Development Tools
+
+| Area | Technology / Tool | Use in the Project |
+|---|---|---|
+| Frontend | React | Builds the user interface and manages application state |
+| Build Tool | Vite | Runs development, testing integration and production builds |
+| Programming | JavaScript, HTML and CSS | Implements logic, structure and styling |
+| Authentication | Supabase Authentication | Manages registration, login, sessions and logout |
+| Database | Supabase PostgreSQL | Stores and retrieves review data |
+| Database Client | `@supabase/supabase-js` | Connects React to Supabase services |
+| Automated Testing | Vitest | Runs automated tests |
+| UI Testing | React Testing Library and User Event | Tests user interactions and rendered output |
+| Static Analysis | ESLint | Checks JavaScript and React code quality |
+| Version Control | Git and GitHub | Tracks changes and team contributions |
+| Project Management | GitHub Issues and GitHub Projects | Tracks user stories, tasks, bugs and progress |
+| Deployment | Vercel | Hosts the deployed production website |
+| Design Documentation | UML, sequence and ER diagrams | Documents structure and interaction |
+
+## 10. Agile Development Process
+
+The project was completed through three main iterations.
+
+### Iteration 1 – Core MVP
+
+Main focus:
+
+- Browse food stalls.
+- View stall details.
+- Create the initial interface.
+- Set up the repository and Project Board.
+- Create the first class and sequence diagrams.
+
+**Planned effort:** 8 working days  
+**Completed effort:** Approximately 5 working days
+
+The unfinished ratings and reviews work was moved into Iteration 2.
+
+![Iteration 1 Burn Down Graph](Iteration%201%EF%BC%88Final%EF%BC%89.png)
+
+### Iteration 2 – Interaction and Automated Testing
+
+Main focus:
+
+- Search food stalls.
+- Filter stalls by category.
+- Sort and reset the stall list.
+- Improve stall details and responsive layout.
+- Add ratings and review interaction.
+- Implement 15 automated tests using Vitest and React Testing Library.
+- Practise branch, pull-request and review workflow.
+
+**Planned velocity:** 100%  
+**Actual velocity:** Approximately 95–100%
+
+![Iteration 2 Burn Down Graph](Iteration%202.png)
+
+### Iteration 3 – Authentication, Database and Final Delivery
+
+Main focus:
+
+- Integrate Supabase Authentication.
+- Integrate Supabase PostgreSQL review storage.
+- Link reviews to authenticated users.
+- Validate review comments and login state.
+- Track and resolve interface defects.
+- Conduct final system and regression testing.
+- Refine documentation and deployment configuration.
+- Prepare the final demonstration and report.
+
+Iteration 3 focused on reliability, persistence and completion rather than adding low-priority features.
+
+### 10.1 Feedback and Response
+
+| Stage | Feedback or Finding | Team Response |
+|---|---|---|
+| Iteration 1 | Students needed clearer and faster access to detailed stall information. | The team improved stall cards and the detail view. |
+| Iteration 2 | Search, comparison and testing evidence needed to be strengthened. | The team added filtering, sorting, review interaction and 15 automated tests. |
+| Iteration 3 | The final system required persistent data rather than frontend-only review storage. | The team integrated Supabase Authentication and PostgreSQL review storage. |
+
+## 11. Testing and Verification Strategy
+
+The project used automated component testing, manual functional testing, system testing and regression testing.
+
+### 11.1 Automated Tests
+
+The repository contains 15 automated tests organised around five user-story areas:
+
+| Test Group | Test Cases | Scope |
+|---|---:|---|
+| Search | TC01–TC03 | Full-name, partial-name and case-insensitive search |
+| Category Filter | TC04–TC06 | Category selection, category changes and reset |
+| Stall Details | TC07–TC09 | Open details, display menu/prices and close details |
+| Sort and Reset | TC10–TC12 | Rating sort, price sort and clear selections |
+| Review Interaction | TC13–TC15 | Named review, anonymous fallback in the earlier interaction design, and empty-comment validation |
+
+The automated suite was created before the final Supabase authentication change. Therefore, the latest authenticated review and database workflow was additionally verified through manual system testing. Updating the review tests to mock the current Supabase session is identified as a maintenance improvement.
+
+### 11.2 Manual and System Testing
+
+Manual tests checked that users could:
+
+- Browse all stalls.
+- Search, filter, sort and reset the stall list.
+- Open and close stall details.
+- View menu, price, opening-hour and location information.
+- Register a user account.
+- Log in and log out.
+- Receive an error when attempting to submit a review without logging in.
+- Submit a valid authenticated review.
+- Retrieve stored reviews after page reload.
+- Receive validation feedback for an empty comment.
+- Use the deployed interface on desktop and mobile screen sizes.
+
+### 11.3 Database and Authentication Testing
+
+Database and authentication testing checked that:
+
+- Supabase registration creates a user account.
+- Valid credentials create a logged-in session.
+- Logout clears the session.
+- Unauthenticated review submission is rejected.
+- A valid review is inserted into the `reviews` table.
+- The review contains the correct `stall_id` and authenticated `user_id`.
+- Stored reviews are retrieved and displayed for the correct stall.
+- Database or authentication errors are handled without crashing the interface.
+
+### 11.4 Final Test Record
+
+| Area | Test Method | Recorded Result |
+|---|---|---|
+| Stall browsing | Automated and manual | Passed |
+| Search | Automated and manual | Passed |
+| Category filtering | Automated and manual | Passed |
+| Sorting and reset | Automated and manual | Passed |
+| Stall details | Automated and manual | Passed |
+| Empty-comment validation | Automated and manual | Passed |
+| Registration, login and logout | Manual system test | Passed |
+| Authenticated review submission | Manual system test | Passed |
+| Supabase review persistence | Manual database test | Passed |
+| Responsive layout | Manual desktop/mobile test | Passed |
+| Vercel deployment | Manual production check | Passed |
+
+## 12. Bug Tracking and Resolution
+
+GitHub Issues and the GitHub Project Board were used to record and manage user stories and defects. Each bug record included the problem description, reproduction information, expected result, actual result, related feature and status.
+
+The workflow used was:
 
 **To Do → In Progress → In Review → Done**
 
-Whenever a defect is discovered during testing, a GitHub Issue is created under the relevant user story. After the issue has been fixed, the related feature is tested again before the issue is moved to **Done** on the GitHub Project Board.
+One documented interface defect involved the vertical position of the login modal. The layout was adjusted and committed after review. Additional final checks covered search behaviour, filtering, stall details, authenticated review submission, responsive layout and documentation consistency.
 
-### System Testing Completion Criteria
+## 13. Version Control and Collaboration
 
-System testing will be considered complete when:
+Git and GitHub were used throughout the development process. Evidence in the repository includes:
 
-- All planned system testing activities have been completed.
-- High-priority bugs have been resolved.
-- Fixed defects have been successfully retested.
-- All major website functions operate correctly.
-- No critical defects remain.
-- The deployed CampusBite website is ready for the Week 10 demonstration.
+- Regular commits from team members.
+- A separate practical branch for feature and pull-request practice.
+- A merged pull request demonstrating the review and merge process.
+- GitHub Issues for user stories and testing tasks.
+- Labels for progress and completion status.
+- A GitHub Project Board for iteration tracking.
+- Commit history showing testing, UI, authentication, database and documentation work.
+- Repository access for the course instructor.
 
-### Reflection
+The instructor, **Dasheng LIU**, was added as a project member so that the repository and project evidence could be reviewed.
 
-Practical 9 strengthened the team's understanding of software testing and defect management. Using GitHub Issues together with the GitHub Project Board made it easier to organise software defects, monitor their progress and link each bug to the relevant user story. Conducting final system testing also improved confidence that the CampusBite website is stable, reliable and ready for project delivery.
+## 14. Local Setup and Verification
 
-## Practical 10: Iteration 3 - Final Review and Demonstration
+From the repository root:
 
-### Objective
+```bash
+cd client
+npm install
+npm run dev
+```
 
-The objective of Practical 10 is to complete Iteration 3, review the final CampusBite system, and prepare the project for the final demonstration.
+The Supabase environment variables must be configured locally or in Vercel without committing secret values:
 
-### Final Project Status
+```text
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-By Practical 10, the main planned features of CampusBite have been implemented and tested.
+Run automated tests and a production build with:
 
-The final system includes:
+```bash
+npm run test:run
+npm run lint
+npm run build
+```
 
-- Browse Food Stalls
-- View Stall Details
-- Search Food Stalls
-- Category Filter
-- Ratings and Reviews
-- Menu, Price and Opening Hours Information
-- Responsive User Interface
+## 15. Final Project Status
 
-Iteration 3 mainly focused on testing, bug fixing, UI refinement and final documentation rather than adding major new features.
+CampusBite satisfies the main project requirements by providing:
 
-### Final Demonstration
+- A software application with source code.
+- A modern graphical user interface.
+- Supabase Authentication for user accounts and sessions.
+- A relational cloud database for persistent reviews.
+- A deployed and accessible web application.
+- Agile planning and iteration evidence.
+- Automated and manual testing evidence.
+- Bug tracking, version control and technical documentation.
 
-During the Week 10 practical, the team will demonstrate the main CampusBite user flow:
+The main user-value features were completed within the available project time. Lower-priority functions were moved to future work to avoid overcommitting and to protect the reliability of the delivered system.
 
-1. Open the deployed CampusBite website.
-2. Browse available food stalls.
-3. Search for a food stall.
-4. Filter stalls by category.
-5. Open and view stall details.
-6. Check menu, prices, opening hours and location.
-7. View ratings and reviews.
-8. Check the responsive layout.
+## 16. Future Improvements
 
-The GitHub Project Board, user stories, testing tasks and bug tracking will also be shown as evidence of the development process.
+Possible future improvements include:
 
-### Final System Check
+- Update automated review tests to mock current Supabase authentication and database calls.
+- Move food stalls, menus and opening hours into Supabase tables.
+- Add password reset and improved account management.
+- Add food photo uploads.
+- Add favourite stalls and personalised recommendations.
+- Add vendor and administrator dashboards.
+- Add review editing, deletion and moderation.
+- Add test coverage reporting and continuous integration through GitHub Actions.
 
-Before the demonstration, the team will complete a final check of the major functions.
+## 17. Conclusion
 
-| Area | Final Check |
-|---|---|
-| Browse Food Stalls | Stall cards display correctly |
-| Search | Search results match the keyword |
-| Category Filter | Correct stalls are displayed |
-| Stall Details | Stall information displays correctly |
-| Ratings & Reviews | Rating and review information works correctly |
-| Responsive Layout | Website works on different screen sizes |
-| Bug Fixes | Previously identified bugs are retested |
+CampusBite delivers a working campus food discovery and review platform. The project demonstrates requirements planning, architectural and database design, React implementation, Supabase authentication and data persistence, automated and manual testing, bug tracking, version control, agile iteration and cloud deployment.
 
-The system testing plan from Practical 9 will be used to support this final check.
+The final system allows students to discover stalls, compare information, register and log in, and submit persistent reviews through a responsive user interface.
 
-### Assessment Rubric Review
+## 18. Declaration of AI-Generated Material
 
-The project will also be reviewed against the CP3407 marking rubric.
-
-| Assessment Area | Evidence |
-|---|---|
-| Requirements | User stories, priorities and estimates |
-| Design | UML diagrams and interface design |
-| Implementation | Working CampusBite website |
-| Testing | Test cases, TDD, system testing and bug tracking |
-| Version Control | GitHub commits, branches, issues and pull requests |
-| Development Tools | React, Vite, GitHub and Vercel |
-| Agile Development | Three iterations, Project Board and burn down graphs |
-| Technical Writing | README and project documentation |
-
-This review helps confirm that the required project evidence is included before the final assessment.
-
-### Iteration 3 Completion
-
-Iteration 3 completes the main development cycle of CampusBite. The final iteration focused on:
-
-- Test-Driven Development
-- System testing
-- Bug tracking and fixing
-- UI refinement
-- Code review
-- Documentation updates
-- Final deployment checking
-
-The GitHub Project Board will be updated so that completed Iteration 3 tasks and resolved bugs are moved to **Done**.
-
-### Reflection
-
-Practical 10 brings together the work completed across all three iterations. Iteration 1 established the main food stall browsing functions, Iteration 2 expanded the website with search, filtering and ratings and reviews, and Iteration 3 focused on testing and final refinement.
-
-The final review helped the team confirm that CampusBite is ready for demonstration and that the development process is supported by clear evidence in GitHub and the project documentation.
+Generative AI tools were used to assist with documentation structure, language editing, code explanation and troubleshooting suggestions during this project. All AI-assisted material was reviewed, adapted and verified by the team against the project source code, GitHub history, testing evidence and deployed system. The team accepts responsibility for the accuracy, quality and final submission of all project code and documentation.
