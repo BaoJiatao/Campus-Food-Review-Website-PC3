@@ -20,7 +20,7 @@ The project addresses the problem of scattered and unreliable campus food inform
 
 ## 4. Project Objectives
 
-- Create a central and reliable platform for campus food discovery.
+- Create a central and reliable platform for campus food discovery. 
 - Help students compare stalls, menus, prices, ratings and reviews.
 - Reduce the time students spend searching for campus food information.
 - Provide a clear feedback channel between students and food vendors.
